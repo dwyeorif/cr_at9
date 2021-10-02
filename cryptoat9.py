@@ -6,7 +6,7 @@ import time
 import requests
 
 p_exchange = 1182.72  # Exchange rate initial value
-u_mount = 1800000  # Upbit Order amount
+u_mount = 1800000  # Upbit order amount
 p_standard = 3.0153  # Premium standard
 p_gap = 0.79  # Premium gap
 binance = ccxt.binance({
