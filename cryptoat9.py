@@ -16,7 +16,7 @@ binance = ccxt.binance({
 upbit = pyupbit.Upbit('', '')  # Upbit API
 myToken = ''  # Slack token
 ticker = 'EOS'  # Ticker
-u_count = 340  # Upbit Order quantity
+u_count = 340  # Upbit order quantity
 b_count = round(u_count*0.997, 1)  # Binance order quantity
 p_cnt = 299  # Initial count
 
