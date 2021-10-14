@@ -5,9 +5,9 @@ import pyupbit
 import time
 import requests
 
-p_exchange = 1182.72  # Exchange rate initial value
-u_mount = 1800000  # Upbit order amount
-p_standard = 3.0153  # Premium standard
+p_exchange = 1185.72  # Exchange rate initial value
+u_mount = 1500000  # Upbit order amount
+p_standard = 2.7153  # Premium standard
 p_gap = 0.79  # Premium gap
 binance = ccxt.binance({
 'apiKey': '',
@@ -102,7 +102,7 @@ while True:
                 p_standard = round((p_standard * 0.98) + (get_premium((binance_usd_price(ticker) * p_exchange), upbit_price(ticker), ticker) * 0.02), 9)
                 if binance_balance('BUSD') < round(u_count * binance_usd_price(ticker) * 1.05):  # Reset
                     p_exchange = get_exchange()
-                    p_standard = round(get_premium((binance_usd_price(ticker) * p_exchange), upbit_price(ticker), ticker), 9) - 1.5*p_gap
+                    p_standard = round(get_premium((binance_usd_price(ticker) * p_exchange), upbit_price(ticker), ticker), 9) - 1.2*p_gap
                     post_message(myToken, "#stock", 'Standard reset: ' + str(p_standard))
 
         if upbit.get_balance('KRW') > round(u_mount*1.03) and binance_balance(ticker) > b_count:  # Reverse premium trading
