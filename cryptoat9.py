@@ -5,10 +5,10 @@ import pyupbit
 import time
 import requests
 
-p_exchange = 1185.72  # Exchange rate initial value
-u_mount = 1500000  # Upbit order amount
-p_standard = 2.7153  # Premium standard
-p_gap = 0.79  # Premium gap
+p_exchange = 1183.72  # Exchange rate initial value
+u_mount = 2000000  # Upbit order amount
+p_standard = 0.9153  # Premium standard
+p_gap = 1.19  # Premium gap
 binance = ccxt.binance({
 'apiKey': '',
 'secret': '',
@@ -16,7 +16,7 @@ binance = ccxt.binance({
 upbit = pyupbit.Upbit('', '')  # Upbit API
 myToken = ''  # Slack token
 ticker = 'EOS'  # Ticker
-u_count = 340  # Upbit order quantity
+u_count = 350  # Upbit order quantity
 b_count = round(u_count*0.997, 1)  # Binance order quantity
 p_cnt = 299  # Initial count
 
@@ -94,7 +94,7 @@ def get_premium(b_price, u_price, tk):  # Current premium
 
 while True:
     try:
-        if binance_balance('BUSD') > round(u_count*binance_usd_price(ticker)*1.03) and upbit.get_balance('KRW-' + ticker) > u_count:  # Premium trading
+        if binance_balance('USDT') > round(u_count*binance_usd_price(ticker)*1.03) and upbit.get_balance('KRW-' + ticker) > u_count:  # Premium trading
             if get_premium((binance_usd_price(ticker)*p_exchange), upbit_price(ticker), ticker) > (p_standard+p_gap):  # Above standard
                 binance_buy(ticker, u_count)
                 upbit_sell(ticker, u_count)
@@ -120,7 +120,7 @@ while True:
             p_cnt = 0
             now_premium = round(get_premium((binance_usd_price(ticker) * p_exchange), upbit_price(ticker), ticker), 2)
             b_krw = float(p_exchange * (1.0 + now_premium / 100))
-            krw_balance = round(upbit.get_balance('KRW') + binance_balance('BUSD') * b_krw)
+            krw_balance = round(upbit.get_balance('KRW') + binance_balance('USDT') * b_krw)
             ticker_balance = round(upbit.get_balance('KRW-' + ticker) + binance_balance(ticker))
             u_count = round(u_mount / (upbit_price(ticker) + 5))
             b_count = round(u_count*0.997, 1)
